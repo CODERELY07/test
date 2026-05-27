@@ -2,7 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Repair;
 use App\Models\User;
+use Database\Factories\RepairFactory;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -21,5 +23,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);
+
+        Repair::factory(10)->create();
     }
 }
