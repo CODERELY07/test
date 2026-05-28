@@ -1,19 +1,20 @@
-
 {
-
- "version": 2,
-    "framework": "laravel",
+    "version": 2,
+      "framework": null,
+    "functions": {
+        "api/index.php": { "runtime": "vercel-php@0.7.1" }
+    },
     "builds": [
         {
             "src": "public/index.php",
-            "use": "vercel-php@0.7.2"
+            "use": "vercel-php@0.7.1"
         },
         {
             "src": "public/**/*",
             "use": "@vercel/static"
         }
     ],
-    "routes": [
+     "routes": [
         {
             "src": "/build/(.*)",
             "dest": "/public/build/$1"
@@ -31,8 +32,12 @@
             "dest": "/public/robots.txt"
         },
         {
-            "src": "/(.*)",
+            "src": "/api/track-repair/(.*)",
             "dest": "/public/index.php"
+        },
+        {
+            "src": "/(.*)",
+            "dest": "/api/index.php"
         }
     ],
      "headers": [
