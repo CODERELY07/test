@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string('category');
             $table->enum('status',['pending', 'ongoing', 'completed'])->default('pending');
             $table->string('ticket_number');
-            $table->string('estimated_cost');
-            $table->string('actual_cost');
+            $table->decimal('estimated_cost');
+            $table->decimal('actual_cost')->nullable();
             $table->timestamps();
         });
     }
