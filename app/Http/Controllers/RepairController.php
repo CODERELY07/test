@@ -12,9 +12,7 @@ class RepairController extends Controller
      */
    public function index()
     {
-        $repairs = Repair::latest()->get();
-
-        return view('repairs', compact('repairs'));
+      return view('admin.repairs');
     }
 
     /**

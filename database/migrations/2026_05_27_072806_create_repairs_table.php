@@ -13,7 +13,14 @@ return new class extends Migration
     {
         Schema::create('repairs', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('description');
+            $table->string('model');
+            $table->string('category');
+            $table->enum('status',['pending', 'ongoing', 'completed'])->default('pending');
             $table->string('ticket_number');
+            $table->string('estimated_cost');
+            $table->string('actual_cost');
             $table->timestamps();
         });
     }
