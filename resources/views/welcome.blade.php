@@ -14,7 +14,7 @@
 
                 try {
                     // URL encode to safely handle '#' symbols if the user types them
-                    let response = await fetch('/api/track-repair/' + encodeURIComponent(this.ticketNumber));
+                    let response = await fetch('/track-repair/' + encodeURIComponent(this.ticketNumber));
                     this.repair = await response.json();
                     this.searched = true;
                 } catch (error) {

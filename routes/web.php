@@ -24,7 +24,7 @@ Route::middleware('auth')->group(function () {
     Route::get('admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
 });
 
-Route::get('/api/track-repair/{ticket}', function ($ticket) {
+Route::get('/track-repair/{ticket}', function ($ticket) {
     $cleanTicket = ltrim(trim($ticket), '#');
 
     $repair = Repair::where('ticket_number', $cleanTicket)
