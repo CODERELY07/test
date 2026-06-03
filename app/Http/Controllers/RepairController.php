@@ -16,9 +16,18 @@ class RepairController extends Controller
     /**
      * Display a listing of the resource.
      */
-   public function index()
+   public function index(Request $request)
     {
-      $repairs = Repair::latest()->paginate(5);
+      $query = Repair::query();
+      $ticket = ltrim(trim($request->searchTicket));
+
+      if($request->filled('searchTicket')){
+        $query->where('ticket_number', $ticket);
+      }
+
+
+      $repairs = $query->latest()->paginate(10)->appends($request->all());
+    //   dd($repairs);
       return view('admin.repairs', compact('repairs'));
     }
 

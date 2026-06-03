@@ -35,7 +35,7 @@ Precognition relies on standard Laravel Form Requests. This means your validatio
 
 Execute this command to generate your request class:
 
-Bash
+
 
 ```
 php artisan make:request StoreRepairesRequest
@@ -44,7 +44,7 @@ php artisan make:request StoreRepairesRequest
 
 File code path: `app/Http/Requests/StoreRepairesRequest.php`
 
-PHP
+
 
 ```
 <?php
@@ -83,7 +83,7 @@ You must attach the `HandlePrecognitiveRequests` middleware to your route. Witho
 
 File code path: `routes/web.php`
 
-PHP
+
 
 ```
 use App\Http\Controllers\RepairController;
@@ -108,7 +108,7 @@ Now hook the Alpine attributes directly into your markup fields.
 -   `:disabled="form.processing"`: Prevents double-submission issues by turning off the submit button during active server communication.
     
 
-HTML
+
 
 ```
  <form

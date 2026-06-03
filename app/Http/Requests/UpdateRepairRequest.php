@@ -15,11 +15,11 @@ class UpdateRepairRequest extends FormRequest
     {
         return [
             'name'           => ['required', 'string', 'max:255'],
+            'description' => ['required'],
             'model'          => ['required', 'string', 'max:255'],
             'category'       => ['required', 'string', 'max:255'],
             'estimated_cost' => ['required', 'numeric', 'min:0'],
             'status'         => ['required', 'string', 'in:pending,ongoing,completed'],
-            'description'    => ['nullable', 'string'],
         ];
     }
 }

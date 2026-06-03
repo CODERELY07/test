@@ -28,7 +28,6 @@
          }">
 
         <div class="max-w-3xl mx-auto">
-
             <div class="text-center mb-10">
                 <h1 class="text-3xl font-black text-gray-900 tracking-tight">Track Your Repair</h1>
                 <p class="mt-2 text-sm text-gray-500 font-medium">Enter your tracking identifier or ticket number to check the real-time status of your device.</p>

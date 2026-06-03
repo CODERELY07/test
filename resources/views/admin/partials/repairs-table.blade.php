@@ -8,13 +8,13 @@
                 <th scope="col" class="px-4 py-4 font-semibold">Category</th>
                 <th scope="col" class="px-4 py-4 font-semibold">Status</th>
                 <th scope="col" class="px-4 py-4 font-semibold text-right">Est. Cost</th>
-                <th scope="col" class="py-4 pl-4 w-12"></th>
+                <th scope="col" class="py-4 pl-4 w-24"></th>
             </tr>
         </thead>
         <tbody class="divide-y divide-gray-50 dark:divide-gray-800/30 text-xs text-gray-600 dark:text-gray-400">
-            @foreach ($repairs as $repair)
+            @forelse ($repairs as $repair)
                 @php
-                    // Safely extract string value whether it's an Enum or string
+                    
                     $statusString = $repair->status->value ?? $repair->status;
 
                     $statusColors = match(Str::lower($statusString)) {
@@ -38,29 +38,40 @@
                     </td>
                     <td class="px-4 py-4 text-right font-medium text-gray-900 dark:text-gray-100">₱{{ $repair->estimated_cost }}</td>
                     <td class="py-4 pl-4 text-right">
-                        <button
-                            @click="openViewModal = true; activeRepair = { ticket_number: '{{ $repair->ticket_number }}', name: '{{ addslashes($repair->name) }}', model: '{{ addslashes($repair->model) }}', category: '{{ addslashes($repair->category) }}', estimated_cost: '{{ $repair->estimated_cost }}', description: '{{ addslashes($repair->description) }}', status: '{{ Str::lower($statusString) }}' }"
-                            class="text-gray-500 hover:text-slate-400 dark:hover:text-white transition font-medium text-xs">
-                            View
-                        </button>
-                      <button type="button"
-                        @click="$dispatch('open-edit-repair-modal', @js([
-                            'id' => $repair->id,
-                            'ticket_number' => $repair->ticket_number,
-                            'name' => $repair->name,
-                            'model' => $repair->model,
-                            'category' => $repair->category,
-                            'estimated_cost' => $repair->estimated_cost,
-                            'description' => $repair->description,
-                            'status' => strtolower($repair->status->value ?? $repair->status),
-                        ]))">
-                        Edit
-                    </button>
+                        <div class="flex justify-end gap-3">
+                            <button
+                                @click="openViewModal = true; activeRepair = { ticket_number: '{{ $repair->ticket_number }}', name: '{{ addslashes($repair->name) }}', model: '{{ addslashes($repair->model) }}', category: '{{ addslashes($repair->category) }}', estimated_cost: '{{ $repair->estimated_cost }}', description: '{{ addslashes($repair->description) }}', status: '{{ Str::lower($statusString) }}' }"
+                                class="text-gray-500 hover:text-slate-400 dark:hover:text-white transition font-medium text-xs">
+                                View
+                            </button>
+                            <button
+                                type="button"
+                                @click="$dispatch('open-edit-repair-modal', @js([
+                                    'id' => $repair->id,
+                                    'ticket_number' => $repair->ticket_number,
+                                    'name' => $repair->name,
+                                    'model' => $repair->model,
+                                    'category' => $repair->category,
+                                    'estimated_cost' => $repair->estimated_cost,
+                                    'description' => $repair->description,
+                                    'status' => strtolower($repair->status->value ?? $repair->status),
+                                ]))"
+                                class="text-gray-500 hover:text-slate-400 dark:hover:text-white transition font-medium text-xs">
+                                Edit
+                            </button>
+                        </div>
                     </td>
                 </tr>
-            @endforeach
+            @empty
+                <tr>
+                    <td colspan="7" class="py-8 text-center text-sm font-medium text-gray-400 dark:text-gray-500">
+                        No Repairs Found
+                    </td>
+                </tr>
+            @endforelse
         </tbody>
     </table>
+
     <div class="mt-4">
         {{ $repairs->links() }}
     </div>
