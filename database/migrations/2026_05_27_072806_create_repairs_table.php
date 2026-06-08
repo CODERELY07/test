@@ -17,10 +17,12 @@ return new class extends Migration
             $table->string('description');
             $table->string('model');
             $table->string('category');
-            $table->enum('status',['pending', 'ongoing', 'completed'])->default('pending');
+            $table->string('downpayment')->default(0);
+            $table->enum('status',['pending','inspection', 'waiting-for-parts','ongoing','testing', 'ready-for-pickup', 'claimed', 'cancelled', 'unrepairable'])->default('pending');
             $table->string('ticket_number');
             $table->decimal('estimated_cost');
             $table->decimal('actual_cost')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

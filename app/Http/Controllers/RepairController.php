@@ -19,10 +19,10 @@ class RepairController extends Controller
    public function index(Request $request)
     {
       $query = Repair::query();
-      $ticket = ltrim(trim($request->searchTicket));
+      $name = ltrim(trim($request->searchName));
 
-      if($request->filled('searchTicket')){
-        $query->where('ticket_number', $ticket);
+      if($request->filled('searchName')){
+        $query->where('name', $name);
       }
 
 
@@ -44,6 +44,7 @@ class RepairController extends Controller
             $repair = Repair::create([
                 'name' => $validated['name'],
                 'description' => $validated['description'],
+                'downpayment' => $validated['downpayment'],
                 'model' => $validated['model'],
                 'category' => $validated['category'],
                 'estimated_cost' => $validated['estimated_cost'],
@@ -101,6 +102,7 @@ class RepairController extends Controller
                 'description'    => $validated['description'],
                 'model'          => $validated['model'],
                 'category'       => $validated['category'],
+                'downpayment'       => $validated['downpayment'],
                 'estimated_cost' => $validated['estimated_cost'],
                 'status'         => $validated['status'],
             ]);
@@ -125,8 +127,24 @@ class RepairController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Repair $repair)
+    public function destroy(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'id' => 'required|integer|exists:repairs,id'
+        ]);
+        try {
+            $repair = Repair::findOrFail($validated['id']);
+            $repair->delete();
+            return redirect()
+                ->route('repairs.index')
+                ->with('success', 'Repair ticket deleted successfully.');
+        } catch (Exception $e) {
+            Log::error('Repair Ticket Deletion Failed: ' . $e->getMessage(), [
+                'id' => $validated['id'] ?? null,
+            ]);
+            return redirect()
+                ->back()
+                ->with('error', 'Something went wrong on our end while deleting the ticket.');
+        }
     }
 }

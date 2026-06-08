@@ -19,6 +19,7 @@ class UpdateRepairRequest extends FormRequest
             'model'          => ['required', 'string', 'max:255'],
             'category'       => ['required', 'string', 'max:255'],
             'estimated_cost' => ['required', 'numeric', 'min:0'],
+            'downpayment' => ['required', 'numeric', 'min:0'],
             'status'         => ['required', 'string', 'in:pending,ongoing,completed'],
         ];
     }

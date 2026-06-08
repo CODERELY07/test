@@ -20,7 +20,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::resource('/repairs', RepairController::class)->middleware([HandlePrecognitiveRequests::class]);;
+    Route::delete('/repairs', [RepairController::class, 'destroy'])
+    ->name('repairs.destroy')
+    ->middleware([HandlePrecognitiveRequests::class]);
+    Route::resource('/repairs', RepairController::class)->middleware([HandlePrecognitiveRequests::class]);
     Route::get('admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
 });
 
@@ -43,6 +46,7 @@ Route::get('/track-repair/{ticket}', function ($ticket) {
         'category' => $repair->category,
         'description' => $repair->description ?? 'No diagnostic notes provided.',
         'estimated_cost' => number_format((float)$repair->estimated_cost, 2),
+        'downpayment' => number_format((float)$repair->estimated_cost, 2),
     ]);
 });
 

@@ -25,6 +25,7 @@ class StoreRepairesRequest extends FormRequest
         return [
             'name' => ['required'],
             'description' => ['required'],
+            'downpayment' => ['required'],
             'model' => ['required'],
             'category' => ['required'],
             'estimated_cost' => ['required'],

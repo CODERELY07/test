@@ -14,7 +14,7 @@
         <tbody class="divide-y divide-gray-50 dark:divide-gray-800/30 text-xs text-gray-600 dark:text-gray-400">
             @forelse ($repairs as $repair)
                 @php
-                    
+
                     $statusString = $repair->status->value ?? $repair->status;
 
                     $statusColors = match(Str::lower($statusString)) {
@@ -39,9 +39,19 @@
                     <td class="px-4 py-4 text-right font-medium text-gray-900 dark:text-gray-100">₱{{ $repair->estimated_cost }}</td>
                     <td class="py-4 pl-4 text-right">
                         <div class="flex justify-end gap-3">
-                            <button
-                                @click="openViewModal = true; activeRepair = { ticket_number: '{{ $repair->ticket_number }}', name: '{{ addslashes($repair->name) }}', model: '{{ addslashes($repair->model) }}', category: '{{ addslashes($repair->category) }}', estimated_cost: '{{ $repair->estimated_cost }}', description: '{{ addslashes($repair->description) }}', status: '{{ Str::lower($statusString) }}' }"
-                                class="text-gray-500 hover:text-slate-400 dark:hover:text-white transition font-medium text-xs">
+                                <button type="button"
+                                    @click="activeRepair = @js([
+                                        'id' => $repair->id,
+                                        'ticket_number' => $repair->ticket_number,
+                                        'name' => $repair->name,
+                                        'model' => $repair->model,
+                                        'category' => $repair->category,
+                                        'estimated_cost' => $repair->estimated_cost,
+                                        'description' => $repair->description,
+                                        'status' => Str::lower($statusString),
+                                        'downpayment' => $repair->downpayment,
+                                    ]); openViewModal = true;"
+                                    class="text-gray-500 hover:text-slate-400 dark:hover:text-white transition font-medium text-xs">
                                 View
                             </button>
                             <button
@@ -53,11 +63,21 @@
                                     'model' => $repair->model,
                                     'category' => $repair->category,
                                     'estimated_cost' => $repair->estimated_cost,
+                                    'downpayment' => $repair->downpayment,
                                     'description' => $repair->description,
                                     'status' => strtolower($repair->status->value ?? $repair->status),
                                 ]))"
                                 class="text-gray-500 hover:text-slate-400 dark:hover:text-white transition font-medium text-xs">
                                 Edit
+                            </button>
+                            <button type="button"
+                                    @click="activeRepair = @js([
+                                        'id' => $repair->id,
+                                        'ticket_number' => $repair->ticket_number,
+                                        'name' => $repair->name,
+                                    ]); openDeleteModal = true;"
+                                    class="text-gray-500 hover:text-slate-400 dark:hover:text-white transition font-medium text-xs">
+                                Delete
                             </button>
                         </div>
                     </td>
