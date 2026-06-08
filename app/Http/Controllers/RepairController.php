@@ -10,7 +10,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
-
 class RepairController extends Controller
 {
     /**
@@ -36,7 +35,6 @@ class RepairController extends Controller
      */
     public function store(StoreRepairesRequest $request){
         $validated = $request->validated();
-
         try {
             $ticket_number = 'TKN-' . Str::ulid();
 
@@ -50,7 +48,6 @@ class RepairController extends Controller
                 'estimated_cost' => $validated['estimated_cost'],
                 'ticket_number' => $ticket_number
             ]);
-
 
             return response()->json([
                 'message' => 'Ticket registered successfully!',

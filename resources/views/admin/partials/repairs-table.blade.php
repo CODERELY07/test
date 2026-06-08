@@ -54,6 +54,10 @@
                                     class="text-gray-500 hover:text-slate-400 dark:hover:text-white transition font-medium text-xs">
                                 View
                             </button>
+                            <a href="{{ route('repair.reciept', $repair->id) }}"
+                                class="text-gray-500 hover:text-slate-400 dark:hover:text-white transition font-medium text-xs">
+                                 Reciept
+                            </a>
                             <button
                                 type="button"
                                 @click="$dispatch('open-edit-repair-modal', @js([

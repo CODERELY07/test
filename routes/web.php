@@ -6,6 +6,7 @@ use App\Http\Controllers\RepairController;
 use App\Models\Repair;
 use Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests;
 use Illuminate\Support\Facades\Route;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 Route::get('/', function () {
     return view('welcome');
@@ -25,6 +26,19 @@ Route::middleware('auth')->group(function () {
     ->middleware([HandlePrecognitiveRequests::class]);
     Route::resource('/repairs', RepairController::class)->middleware([HandlePrecognitiveRequests::class]);
     Route::get('admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+
+    Route::get('/repair/{repair}/receipt', function(Repair $repair) {
+        // Generate as standard SVG text stream (requires NO extra php extensions)
+        $qrCodeSvg = QrCode::format('svg')
+            ->size(400)
+            ->errorCorrection('H')
+            ->generate($repair->ticket_number);
+
+        return view('admin.repairs.receipt', [
+            'repair' => $repair,
+            'qrCodeSvg' => $qrCodeSvg
+        ]);
+    })->name('repair.reciept');
 });
 
 Route::get('/track-repair/{ticket}', function ($ticket) {
